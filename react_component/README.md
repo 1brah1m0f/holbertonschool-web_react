@@ -1,1 +1,1 @@
-React component
+React Component
