@@ -1,14 +1,10 @@
-import { Component } from "react";
-
-class BodySection extends Component {
-  render() {
-    return(
-      <div className="bodySection mt-auto">
-        <h2 className="font-bold pl-4">{ this.props.title }</h2>
-        {this.props.children}
+export default function BodySection({ title, children }) {
+  return (
+    <div className='bodySection max-w-full'>
+      <h2 className="font-bold text-xl mt-8">{title}</h2>
+      <div className="max-w-full overflow-hidden">
+        {children}
       </div>
-    )
-  }
+    </div>
+  )
 }
-
-export default BodySection;

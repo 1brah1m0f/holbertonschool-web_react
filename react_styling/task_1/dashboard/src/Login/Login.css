@@ -1,20 +1,38 @@
-/************************** App-body **************************/
 .App-body {
-  text-align: justify;
-  flex: 1;
+  display: flex;
+  flex-direction: column;
+  height: 54vh;
+  padding: 20px 20px 20px 40px;
+  border-top: 5px red solid;
+  margin-top: 5px
 }
 
 .App-body p {
-  margin-left: 1rem;
+  font-family: 'Roboto', sans-serif;
+  font-size: 1.3rem;
+  margin-top: 30px;
 }
 
-label[for='email'],
-label[for='password'],
-.App-body #email,
-.App-body #password {
-  margin-left: 0.5rem;
+.App-body .form {
+  font-size: 1.2rem;
+  font-family: 'Roboto', sans-serif;
+  margin-top: 25px;
 }
 
-.App-body button {
-  margin-left: 1rem;
+input, button {
+  border: 1px solid black;
+  border-radius: 4px;
+}
+
+.App-body .form label{
+  padding-right: 10px;
+}
+
+#email, #password {
+  margin-right: 10px
+}
+
+.form button {
+  cursor: pointer;
+  padding: 0 3px;
 }

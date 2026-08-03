@@ -1,65 +1,74 @@
-import { Component } from 'react';
-import CloseButton from '../assets/close-button.png';
-import NotificationItem from './NotificationItem';
+import React from "react";
+import closeIcon from "../assets/close-icon.png";
+import NotificationItem from "./NotificationItem";
 
-class Notifications extends Component {
-  handleClick = () => console.log('Close button has been clicked');
-
-  // Méthode markAsRead
-  markAsRead = (id) => {
-    console.log(`Notification ${id} has been marked as read`);
+export default class Notifications extends React.Component {
+  constructor(props) {
+    super(props);
   }
 
-  shouldComponentUpdate(nextProps) {
-    return this.props.notifications.length !== nextProps.notifications.length;
+  markAsRead = (id) => {
+    console.log(`Notification ${id + 1} has been marked as read`);
+  };
+
+  shouldComponentUpdate(nextProps, nextState) {
+    return (
+      this.props.notifications.length !== nextProps.notifications.length ||
+      this.props.displayDrawer !== nextProps.displayDrawer
+    );
   }
 
   render() {
+    const { notifications = [], displayDrawer = true } = this.props;
+
     return (
-      <div className='Notification-Component flex flex-wrap justify-end mr-2.5'>
-        <div className={`notification-title text-right w-full ${this.props.notifications.length > 0 && !this.props.displayDrawer ? ' animate-bounce' : ''}`}>
-          <p>Your notifications</p>
+      <>
+        <div
+          className={`notification-title absolute right-3 top-1 whitespace-nowrap ${
+            notifications.length > 0 && displayDrawer === false
+              ? "animate-bounce"
+              : ""
+          }`}
+        >
+          Your notifications
         </div>
-        {
-          this.props.displayDrawer && <div className="notification-items flex flex-col md:flex-wrap border-dashed border-[var(--main-color)] border-[2.5px]
-            w-screen md:w-[25vw] min-h-screen md:min-h-0 p-3 md:p-[6px] fixed top-0 left-0 md:relative bg-white md:bg-transparent mb-4">
-            <div className='flex justify-between items-center w-full'>
-              {this.props.notifications.length !== 0 && <p>Here is the list of notifications</p>}
-              {this.props.notifications.length !== 0 && <button aria-label='Close' style={{
-                width: '1.75rem',
-                height: '1rem',
-                marginTop: '0.25rem',
-                marginLeft: 'auto',
-                background: 'none',
-                border: 'none',
-                cursor: 'pointer'
-              }}
-              onClick={this.handleClick}>
-                <img className='w-[50%] md:w-[70%]' src={CloseButton} />
-              </button>}
-            </div>
-            <ul className='w-full list-none md:list-[square] md:list-inside md:pl-1'>
-              {this.props.notifications.length===0 ? 'No new notification for now' :
-                this.props.notifications.map((notification) => (
-                <NotificationItem
-                  key={notification.id}
-                  type={notification.type}
-                  value={notification.value}
-                  html={notification.html}
-                  markAsRead={this.markAsRead}
-                  id={notification.id} />
-              ))}
-            </ul>
+        {displayDrawer ? (
+          <div className="notification-items relative border-[3px] border-dotted border-[color:var(--main-color)] right-3 p-1.5 w-[380px] float-right mt-7 max-[912px]:w-full max-[912px]:fixed max-[912px]:top-0 max-[912px]:left-0 max-[912px]:right-0 max-[912px]:bottom-0 max-[912px]:z-50 max-[912px]:float-none max-[912px]:m-0 max-[912px]:p-3 max-[912px]:bg-white max-[912px]:overflow-y-hidden max-[912px]:h-screen max-[430px]:overflow-y-hidden max-[430px]:h-screen">
+            {notifications.length > 0 ? (
+              <div className="relative">
+                <p className="m-0 max-[912px]:text-[20px]">
+                  Here is the list of notifications
+                </p>
+                <button
+                  onClick={() => console.log("Close button has been clicked")}
+                  aria-label="Close"
+                  className="absolute cursor-pointer right-0 top-0 bg-transparent"
+                >
+                  <img src={closeIcon} alt="close icon" className="w-3 h-3" />
+                </button>
+                <ul className="list-[square] pl-5 max-[912px]:p-0 max-[912px]:list-none">
+                  {notifications.map((notification, index) => (
+                    <NotificationItem
+                      id={index}
+                      key={notification.id}
+                      type={notification.type}
+                      value={notification.value}
+                      html={notification.html}
+                      markAsRead={this.markAsRead}
+                    />
+                  ))}
+                </ul>
+              </div>
+            ) : (
+              <p className="max-[912px]:text-[20px]">
+                No new notification for now
+              </p>
+            )}
           </div>
-        }
-      </div>
-    )
+        ) : (
+          []
+        )}
+      </>
+    );
   }
 }
-
-Notifications.defaultProps = {
-  notifications: [],
-  displayDrawer: false,
-};
-
-export default Notifications;

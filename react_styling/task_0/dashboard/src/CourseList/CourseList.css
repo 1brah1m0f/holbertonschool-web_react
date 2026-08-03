@@ -1,16 +1,14 @@
-#CourseListContainer {
-  flex: 1;
+.courses {
+    margin: 130px auto;
+    width: 90%;
+    height: 31vh;
 }
 
 #CourseList {
-  margin: 1rem 0;
-  width: 90%;
-  justify-self: center;
-  border: #909090 solid;
-  border-collapse: collapse;
+    width: 100%;
 }
 
-#CourseList th,
-#CourseList td {
-  border: #909090 solid;
+table, th, tr, td {
+    border-collapse: collapse;
+    border: 1px solid rgb(161, 161, 161);
 }
